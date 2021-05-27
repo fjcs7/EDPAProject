@@ -109,44 +109,42 @@ arvore construa_arvore(arvore _no, int nivel) {
 	return no;
 }
 
-arvore iniciar_fila() {
-	return cria_no(0, -1);
+void iniciar_fila(arvore* f) {
+	tamanhoAtual = 0;
+	proxFila = 0;
+	f = (arvore)malloc(sizeof(celula)*(k+1));
 }
 
-arvore enfileirar(arvore fila, arvore no) {
+void enfileirar(arvore* fila, arvore no) {
 	if (no == NULL) {
 		return;
 	}
-	fila->dir = no;
-	return fila;
+	fila[tamanhoAtual++] = no;
 }
 
-int fila_vazia(arvore fila) {
-	return fila->dir == NULL;
+int fila_vazia(arvore* fila) {
+	return proxFila == tamanhoAtual;
 }
 
-arvore desenfileirar(arvore fila) {
-	arvore no = fila->dir;
-	fila = no->dir;
+arvore desenfileirar(arvore* fila) {
+	arvore no = fila[proxFila];
+	//fila[proxFila] = NULL;
+	proxFila++;
 	return no;
 }
 
-void destruir_fila(arvore* fila) {
-	//free(fila);
-}
-
 void percurso_em_largura(arvore r) {
-	arvore f = iniciar_fila();
-	f = enfileirar(f, r);
-	a = -1;
+	arvore* f;
+	iniciar_fila(&f);
+	enfileirar(&f, r);
+	a = 0;
 	
 	while (!fila_vazia(f)) {
-		r = desenfileirar(f);
+		r = desenfileirar(&f);
 		if (r) {
-			f = enfileirar(f, r->esq);
-			f = enfileirar(f, r->dir);
+			enfileirar(&f, r->esq);
+			enfileirar(&f, r->dir);
 			saida[a++] = r->chave; /* visita raiz */
 		}
 	}
-	destruir_fila(&f);
 }
