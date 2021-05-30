@@ -19,10 +19,10 @@ typedef celula* arvore;
 
 int k;
 int a;
-int tamanhoAtual;
-int proxFila;
+
 char saida[SIZ];
 char entrada[SIZ];
+
 int nivelMax;
 int altura;
 int qtNosUltimoNivel;
