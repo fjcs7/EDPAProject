@@ -8,6 +8,7 @@ typedef struct reg {
 	int nivel;
 	struct reg* esq;
 	struct reg* dir;
+	struct reg* irmao;
 } celula;
 
 typedef celula* arvore;
@@ -23,18 +24,20 @@ int proxFila;
 char saida[SIZ];
 char entrada[SIZ];
 int nivelMax;
+int altura;
 int qtNosUltimoNivel;
 
 arvore cria_no(char, int);
 int calcula_altura_max(int);
 arvore construa_arvore(arvore, int);
-void percurso_em_largura(arvore);
+int percurso_em_largura(arvore);
 
 int main(int argc, char** argv)
 {
 
 	int n;
 	nivelMax = 0;
+	altura = 0;
 
 	while (scanf("%d%*c", &n), n)
 	{
@@ -42,9 +45,12 @@ int main(int argc, char** argv)
 		scanf("%[^\n]", entrada);
 
 		k = 0;
-		nivelMax = calcula_altura_max(n);
-		qtNosUltimoNivel = numero_nos_folha(nivelMax, n);
+		altura = calcula_altura_max(n);
+		nivelMax = altura - 1;
+		qtNosUltimoNivel = numero_nos_folha(altura, n);
 		arvore r = construa_arvore(NULL, 0);
+
+		memset(saida, 0, sizeof saida);
 
 		percurso_em_largura(r);
 
@@ -57,17 +63,18 @@ int main(int argc, char** argv)
 }
 
 int calcula_altura_max(int nrNos) {
-	return ceil(log2(nrNos));
+	//Altura de uma arv.bin.quase completa com n nodos internos: teto((log_2(n + 1)) - https://www.inf.ufpr.br/carmem/ci057/apostila.pdf
+	return ceil(log2(nrNos+1));
 }
 
 int numero_nos_folha(int altura, int nrNos) {
 
-	int nivelAnterior = 0;
-	if (altura > 0) {
-		nivelAnterior = altura - 1;
+	int numeroNos = nrNos - (pow(2, altura) - 1);
+	if (numeroNos <= 0) {
+		numeroNos = nrNos - (pow(2, (altura -1)) - 1);
 	}
 
-	return nrNos - (pow(2, altura) - 1);
+	return numeroNos;
 }
 
 arvore cria_no(char chave, int nivel) {
@@ -76,6 +83,7 @@ arvore cria_no(char chave, int nivel) {
 	no->nivel = nivel;
 	no->esq = NULL;
 	no->dir = NULL;
+	no->irmao = NULL;
 	return no;
 }
 
@@ -109,33 +117,48 @@ arvore construa_arvore(arvore _no, int nivel) {
 	return no;
 }
 
-void iniciar_fila(arvore* f) {
-	tamanhoAtual = 0;
-	proxFila = 0;
-	f = (arvore)malloc(sizeof(celula)*(k+1));
+void iniciar_fila(arvore *f) {
+	*f = cria_no(NULL, -1);
 }
 
-void enfileirar(arvore* fila, arvore no) {
-	if (no == NULL) {
+void insere_no_irmao(arvore *r, arvore no) {
+	arvore _r = *r;
+	if (_r == NULL) {
+		*r = no;
 		return;
 	}
-	fila[tamanhoAtual++] = no;
+	else if (_r -> irmao == NULL) {
+		_r->irmao = no;
+		*r = _r;
+		return;
+	}
+	_r = _r->irmao;
+	insere_no_irmao(&_r,no);
 }
 
-int fila_vazia(arvore* fila) {
-	return proxFila == tamanhoAtual;
+void enfileirar(arvore *fila, arvore no) {
+	if (no == NULL) {
+		return fila;
+	}
+	arvore _fila = *fila;
+	insere_no_irmao(&_fila, no);
+	*fila = _fila;
+
 }
 
-arvore desenfileirar(arvore* fila) {
-	arvore no = fila[proxFila];
-	//fila[proxFila] = NULL;
-	proxFila++;
+int fila_vazia(arvore fila) {
+	return fila == NULL;
+}
+
+arvore desenfileirar(arvore * fila) {
+	arvore no = *fila;
+	//no = no->irmao;
+	*fila = no->irmao;
 	return no;
 }
 
-void percurso_em_largura(arvore r) {
-	arvore* f;
-	iniciar_fila(&f);
+int percurso_em_largura(arvore r) {
+	arvore f = NULL;
 	enfileirar(&f, r);
 	a = 0;
 	
@@ -147,4 +170,6 @@ void percurso_em_largura(arvore r) {
 			saida[a++] = r->chave; /* visita raiz */
 		}
 	}
+	free(f);
+	return 0;
 }
