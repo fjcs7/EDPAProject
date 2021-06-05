@@ -5,3 +5,4 @@ Fernando Junio Cunha e Sousa:
 	- Realizou os testes de implementação e confirmou a solução enviando o código no URI.
 	- Auxiliou na transposição das funções implementadas para o slide em LaTeX.
 	- Discutiu com o grupo a solução implementada para que as mesmas pudessem ser analisadas com clareza.
+	- Criou o arquivo leiame.txt para auxiliar na execução da solução.

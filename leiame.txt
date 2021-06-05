@@ -1,1 +1,11 @@
 O arquivo que contém a solução para o problema é o arquivo 2671.c
+
+Com o gcc já instalado no seu sistema, é muito simples usá-lo para compilar programas em C. Se o programa consistir de um único arquivo, você pode simplesmente executar este comando no terminal:
+
+$ gcc 2671.c -o URI_2671
+
+onde 2671.c é o nome do arquivo que contém o código. Os outros dois parâmetros, -o URI_2671, indicam o arquivo de saída do compilador — o arquivo executável que conterá o programa. Você não verá nenhuma mensagem na tela se a compilação ocorrer sem problemas; o compilador só diz alguma coisa quando ocorrem erros.
+
+Você precisa especificar o nome do arquivo executável de saída pois o padrão, por razões históricas, é usar o arquivo a.out. Em geral, usamos o mesmo nome do arquivo de código, tirando a extensão .c. Veja que, ao contrário do Windows, o Linux não precisa da extensão .exe para reconhecer um arquivo executável; ele utiliza os atributos de permissão do arquivo para saber se ele é executável, dos quais o gcc já cuida automaticamente.
+
+Para duvidas adicionais ver em: https://fig.if.usp.br/~esdobay/c/gcc.html
