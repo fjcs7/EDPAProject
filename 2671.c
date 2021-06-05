@@ -18,7 +18,6 @@ typedef celula* arvore;
 #define SIZ 250
 
 int k;
-int a;
 
 char saida[SIZ];
 char entrada[SIZ];
@@ -30,14 +29,12 @@ int qtNosUltimoNivel;
 arvore cria_no(char, int);
 int calcula_altura_max(int);
 arvore construa_arvore(arvore, int);
-int percurso_em_largura(arvore);
+void percurso_em_largura_rec(arvore, int);
 
 int main(int argc, char** argv)
 {
 
 	int n;
-	nivelMax = 0;
-	altura = 0;
 
 	while (scanf("%d%*c", &n), n)
 	{
@@ -45,14 +42,19 @@ int main(int argc, char** argv)
 		scanf("%[^\n]", entrada);
 
 		k = 0;
+		///* Variáveis de acesso global*/	
 		altura = calcula_altura_max(n);
 		nivelMax = altura - 1;
 		qtNosUltimoNivel = numero_nos_folha(altura, n);
+
+		///* Constrói árvore com os nós passados na entrada*/	
 		arvore r = construa_arvore(NULL, 0);
 
 		memset(saida, 0, sizeof saida);
 
-		percurso_em_largura(r);
+		//percurso_em_largura(r);
+
+		percurso_em_largura_rec(r, 1);
 
 		printf("%s\n", saida);
 
@@ -117,59 +119,13 @@ arvore construa_arvore(arvore _no, int nivel) {
 	return no;
 }
 
-void iniciar_fila(arvore *f) {
-	*f = cria_no(NULL, -1);
-}
+void percurso_em_largura_rec(arvore r, int posicaoNode) {
 
-void insere_no_irmao(arvore *r, arvore no) {
-	arvore _r = *r;
-	if (_r == NULL) {
-		*r = no;
-		return;
+	if (r == NULL) {
+		return 0;
 	}
-	else if (_r -> irmao == NULL) {
-		_r->irmao = no;
-		*r = _r;
-		return;
-	}
-	_r = _r->irmao;
-	insere_no_irmao(&_r,no);
-}
+	saida[posicaoNode-1] = r->chave;
 
-void enfileirar(arvore *fila, arvore no) {
-	if (no == NULL) {
-		return fila;
-	}
-	arvore _fila = *fila;
-	insere_no_irmao(&_fila, no);
-	*fila = _fila;
-
-}
-
-int fila_vazia(arvore fila) {
-	return fila == NULL;
-}
-
-arvore desenfileirar(arvore * fila) {
-	arvore no = *fila;
-	//no = no->irmao;
-	*fila = no->irmao;
-	return no;
-}
-
-int percurso_em_largura(arvore r) {
-	arvore f = NULL;
-	enfileirar(&f, r);
-	a = 0;
-	
-	while (!fila_vazia(f)) {
-		r = desenfileirar(&f);
-		if (r) {
-			enfileirar(&f, r->esq);
-			enfileirar(&f, r->dir);
-			saida[a++] = r->chave; /* visita raiz */
-		}
-	}
-	free(f);
-	return 0;
+	percurso_em_largura_rec(r->esq, 2 * posicaoNode);
+	percurso_em_largura_rec(r->dir, 2 * posicaoNode + 1);
 }
