@@ -1,0 +1,1 @@
+O arquivo que contém a solução para o problema é o arquivo 2671.c

@@ -65,7 +65,7 @@ int main(int argc, char** argv)
 }
 
 int calcula_altura_max(int nrNos) {
-	//Altura de uma arv.bin.quase completa com n nodos internos: teto((log_2(n + 1)) - https://www.inf.ufpr.br/carmem/ci057/apostila.pdf
+	///*Altura de uma arv.bin.quase completa com n nodos internos: teto((log_2(n + 1)) - https://www.inf.ufpr.br/carmem/ci057/apostila.pdf */
 	return ceil(log2(nrNos+1));
 }
 
