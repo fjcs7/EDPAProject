@@ -1,3 +1,11 @@
+Douglas Rolins de Santana:
+	- Discutiu com o grupo para definir qual seria a opção de trabalho;
+	- Pesquisou na plataforma URI para definir o problema;
+	- Realizou testes na solução implementada para validação e submissão na plataforma URI;
+	- Realizou a criação do template do slide no LaTex;
+	- Auxiliou na construção do conteúdo dos slides em LaTex;
+	- Contribuiu com a análise da complexidade do algoritmo;
+	
 Fernando Junio Cunha e Sousa:
 	- Discutiu com o grupo para definir qual seria a opção de trabalho.
 	- Realizou a pesquisa para implementar a solução.
@@ -6,3 +14,5 @@ Fernando Junio Cunha e Sousa:
 	- Auxiliou na transposição das funções implementadas para o slide em LaTeX.
 	- Discutiu com o grupo a solução implementada para que as mesmas pudessem ser analisadas com clareza.
 	- Criou o arquivo leiame.txt para auxiliar na execução da solução.
+
+
